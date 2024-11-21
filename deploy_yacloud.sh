@@ -35,11 +35,11 @@ echo "Загружаем новую версию функции..."
 yc serverless function version create \
   --function-name "$FUNCTION_NAME" \
   --runtime python311 \
-  --entrypoint ghpars.handler \
+  --entrypoint github_parser.handler \
   --memory 128m \
   --execution-timeout 10s \
-  --source-path "$FUNCTION_ZIP_PATH" \
- --environment "DB_NAME=ghpsql DB_HOST=rc1b-5p9g4g147bxm77o2.mdb.yandexcloud.net DB_PASS=1qaz2wsx DB_PORT=6432 DB_USER=user DB_CERT_PATH=/root.crt DB_SSLMODE=verify-full DB_TSA=read-write" && echo "Новая версия функции успешно создана." || echo "Ошибка создания версии функции."
+  --source-path "$FUNCTION_ZIP_PATH"  && echo "Новая версия функции успешно создана." || echo "Ошибка создания версии функции."
+  # --environment "DB_NAME=ghpsql DB_HOST=rc1b-5p9g4g147bxm77o2.mdb.yandexcloud.net DB_PASS=1qaz2wsx DB_PORT=6432 DB_USER=user DB_CERT_PATH=/root.crt DB_SSLMODE=verify-full DB_TSA=read-write" && echo "Новая версия функции успешно создана." || echo "Ошибка создания версии функции."
 
 # Настройка триггера
 echo "Введите FUNCTION_ID:"

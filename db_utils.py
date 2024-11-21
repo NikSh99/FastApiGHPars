@@ -14,6 +14,7 @@ def get_db_connection() -> PSQLConnection:
     out: Connection object.
     """
     try:
+        '''
         conn = psycopg2.connect(
             host=os.getenv('DB_HOST'),
             port=os.getenv('DB_PORT'),
@@ -24,6 +25,16 @@ def get_db_connection() -> PSQLConnection:
             password=os.getenv('DB_PASS'),
             target_session_attrs=os.getenv('DB_TSA')
         )
+        '''
+        conn = psycopg2.connect("""
+                host=rc1b-5p9g4g147bxm77o2.mdb.yandexcloud.net
+                port=6432
+                sslmode=verify-full
+                dbname=ghpsql
+                user=user
+                password=1qaz2wsx
+                target_session_attrs=read-write
+            """)
         logger.info("Successful connection to the database.")
         return conn
     except psycopg2.OperationalError as e:
