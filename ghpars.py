@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 def ghtop_parse():
     """Receives data on the top 100 repositories and updates the database."""
     logger.info("Starting the GitHub top repositories parsing process.")
-
+    # https://api.github.com/search/repositories?q=stars:%3E70000&sort=stars&order=desc&per_page=100
     query = {
-        'q': 'stars:>1000',
+        'q': 'stars:>70000',
         'sort': 'stars',
         'order': 'desc',
         'per_page': 100
@@ -38,19 +38,18 @@ def ghtop_parse():
 
     data_for_db = [
         (
-            repo['full_name'],
-            repo['owner']['login'],
+            repo.get('full_name', 'unknown'),
+            repo.get('owner', {}).get('login', 'unknown'),
             idx + 1,
             None,
-            repo['stargazers_count'],
-            repo['watchers_count'],
-            repo['forks_count'],
-            repo['open_issues_count'],
-            repo['language']
+            repo.get('stargazers_count', 0),
+            repo.get('watchers_count', 0),
+            repo.get('forks_count', 0),
+            repo.get('open_issues_count', 0),
+            repo.get('language', 'unknown')
         )
         for idx, repo in enumerate(repos)
     ]
-
     update_top100_repos(data_for_db)
     logger.info("Database successfully updated with top 100 repositories.")
 
