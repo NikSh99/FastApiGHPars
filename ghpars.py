@@ -14,7 +14,7 @@ def ghtop_parse():
     logger.info("Starting the GitHub top repositories parsing process.")
 
     query = {
-        'q': 'stars:>50000',
+        'q': 'stars:>1000',
         'sort': 'stars',
         'order': 'desc',
         'per_page': 100
@@ -41,7 +41,7 @@ def ghtop_parse():
             repo['full_name'],
             repo['owner']['login'],
             idx + 1,
-            None,  # Previous position (if unavailable, None)
+            None,
             repo['stargazers_count'],
             repo['watchers_count'],
             repo['forks_count'],

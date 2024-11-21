@@ -9,17 +9,7 @@ fi
 yc init
 
 # Задаём переменные окружения
-ENV_VARS_FOR_DB=$(cat <<EOF
-DB_HOST=host.docker.internal
-DB_PORT=5432
-DB_SSLMODE=disable
-DB_CERT_PATH=None
-DB_NAME=postgres
-DB_USER=postgres
-DB_PASS=!QAZ2wsx
-DB_TSA=any
-EOF
-)
+# ENV_VARS_FOR_DB="DB_NAME=ghpsql,DB_HOST=rc1b-5p9g4g147bxm77o2.mdb.yandexcloud.net,rc1d-emqut7to4cmmpnxn.mdb.yandexcloud.net,DB_PASS=!QAZ2wsx,DB_PORT=6432,DB_USER=user,DB_CERT_PATH=/root.crt,DB_SSLMODE=verify-full,DB_TSA=read-write"
 
 FUNCTION_NAME="gh-pars"
 
@@ -49,7 +39,7 @@ yc serverless function version create \
   --memory 128m \
   --execution-timeout 10s \
   --source-path "$FUNCTION_ZIP_PATH" \
-  --environment "$ENV_VARS_FOR_DB" && echo "Новая версия функции успешно создана." || echo "Ошибка создания версии функции."
+ --environment "DB_NAME=ghpsql DB_HOST=rc1b-5p9g4g147bxm77o2.mdb.yandexcloud.net DB_PASS=1qaz2wsx DB_PORT=6432 DB_USER=user DB_CERT_PATH=/root.crt DB_SSLMODE=verify-full DB_TSA=read-write" && echo "Новая версия функции успешно создана." || echo "Ошибка создания версии функции."
 
 # Настройка триггера
 echo "Введите FUNCTION_ID:"

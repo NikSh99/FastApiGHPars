@@ -8,8 +8,10 @@ def fetch_github_repos(query: dict) -> dict:
     """Requests a list of repositories via the GitHub API."""
     url = "https://api.github.com/search/repositories"
     try:
+        logger.info(f"Sending request to GitHub API with query: {query}")
         response = requests.get(url, params=query)
         response.raise_for_status()
+        logger.info(f"Received response: {response.status_code}")
         logger.info("The request to GitHub API was completed successfully.")
         return response.json()
     except requests.exceptions.RequestException as e:
